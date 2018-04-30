@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-let indexNum=1
+
 //Connection URL
 const url = 'mongodb://localhost:27017';
 const dbName = 'nodemongoprojectdb';
@@ -27,8 +27,8 @@ MongoClient.connect(url, (err,client)=>{
 const insertDocuments = (db,callback)=>{
     const collection = db.collection('documents');
     collection.insertMany([
-        {index: indexNum++,name:'Kavitha',address:'111 abc st'},{index: indexNum++,name:'Kamal',address:'111 abc st'},
-        {index: indexNum++,name:'Vishwa',address:'111 abc st'},{index: indexNum++,name:'Kavya',address:'111 abc st'}
+        {name:'Kavitha',address:'111 abc st'},{name:'Kamal',address:'111 abc st'},
+        {name:'Vishwa',address:'111 abc st'},{name:'Kavya',address:'111 abc st'}
     ], (err,result)=>{
         assert.equal(err,null);
         assert.equal(4,result.result.n);
@@ -42,7 +42,7 @@ const findDocuments = (db,callback)=>{
     //Get the documents collection
     const collection = db.collection('documents');
     //Find some documents
-    collection.find({index:3}).toArray((err,docs)=>{
+    collection.find({name:'Kavitha'}).toArray((err,docs)=>{
         assert.equal(err,null);
         console.log("Found the following records");
         console.log(docs);
@@ -52,7 +52,7 @@ const findDocuments = (db,callback)=>{
 
 const updateDocument = (db,callback)=>{
     const collection = db.collection('documents');
-    collection.updateOne({index:3}, {$set: {address:'123 xyz st'}},(err,result)=>{
+    collection.updateOne({name:'Vishwa'}, {$set: {address:'123 xyz st'}},(err,result)=>{
         assert.equal(err,null);
         assert.equal(1,result.result.n);
         console.log("Updated a document");
@@ -72,7 +72,7 @@ const deleteDocument = (db,callback)=>{
 const indexDocument = (db,callback)=>{
     const collection = db.collection('documents');
     collection.createIndex(
-        {name:'Kavitha'}, null, (err,results)=>{
+        {name:1}, null, (err,results)=>{
             console.log(results);
             callback();
         }
