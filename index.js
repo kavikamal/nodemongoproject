@@ -14,7 +14,7 @@ MongoClient.connect(url, (err,client)=>{
        // deleteDocument(db, ()=> {
        //updateDocument(db,()=>{    
             findDocuments(db, ()=>{
-                indexDocument(db,()=>{
+                indexCollection(db,()=>{
                     client.close();
                 }) ;            
             });  
@@ -69,7 +69,7 @@ const deleteDocument = (db,callback)=>{
     });
 }
 
-const indexDocument = (db,callback)=>{
+const indexCollection = (db,callback)=>{
     const collection = db.collection('documents');
     collection.createIndex(
         {name:1}, null, (err,results)=>{
